@@ -1,5 +1,5 @@
 const redis = require("redis");
-const config = require("../config/dev");
+const config = require("../common/config");
 const { promisify } = require("util");
 
 /**
@@ -13,7 +13,6 @@ module.exports.init_redis = () => {
   client.on("error", (err) => {
     console.error(`Redis client could not connect: ${err}`);
   });
-  client.get = promisify(client.get).bind(client);
   client.hgetall = promisify(client.hgetall).bind(client);
   return client;
 };
