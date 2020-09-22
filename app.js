@@ -19,17 +19,10 @@ console.log(
 console.log(
   "*If the robot is of the grid and LOST, you have to place a new robot on the grid\n"
 );
-
-reader
-  .on("line", getInputs)
-  .on("close", () => {
-    console.log("Done");
-    process.exit(0);
-  })
-  .setPrompt("Commands> ");
+reader.on("line", getInputs).setPrompt("Commands> ");
 reader.prompt();
 
 function getInputs(input) {
-  const action = controllers.process(input, core);
+  controllers.process(input, core);
   reader.prompt();
 }

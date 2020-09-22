@@ -5,15 +5,18 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nodemon --exec \"mocha -R min\""
   },
   "author": "Mursal Sheydayev",
   "license": "ISC",
   "dependencies": {
+    "immutable": "^4.0.0-rc.12",
     "nodemon": "^2.0.4",
     "redis": "^3.0.2"
   },
   "devDependencies": {
-    "eslint": "^7.9.0"
+    "eslint": "^7.9.0",
+    "mocha": "^8.1.3",
+    "chai": "^4.2.0"
   }
 }
