@@ -41,20 +41,20 @@ async function process(input, core) {
  * @param  {Array} input user input in array form
  */
 function isCoordsOk(args) {
-  if (!parseInt(args[0]) && parseInt(args[0]) < 0) {
-    console.log("X value must be an integer");
+  if (!isPositiveInteger(args[0])) {
+    console.log("X value must be a positive integer");
     return false;
   }
   if (parseInt(args[0]) > 50) {
-    console.log("X coordinates must be within 50");
+    console.log("X value must be within 50");
     return false;
   }
-  if (!parseInt(args[1]) && parseInt(args[1]) < 0) {
-    console.log("Y value must be an integer");
+  if (!isPositiveInteger(args[1])) {
+    console.log("Y value must be a positive integer");
     return false;
   }
   if (parseInt(args[1]) > 50) {
-    console.log("Y coordinate must be within 50");
+    console.log("Y value must be within 50");
     return false;
   }
   return true;
@@ -155,9 +155,11 @@ async function moveRobot(args, robotPosition, core) {
     core.redis.hset("ROBOT", "x", posX);
     core.redis.hset("ROBOT", "y", posY);
     core.redis.hset("ROBOT", "direc", dir);
+    return "T";
   } else {
     console.log("current position:", posX, posY, dir, "LOST");
     core.redis.del("ROBOT");
+    return "P";
   }
 }
 
@@ -244,6 +246,22 @@ async function isOnGrid(x, y, core) {
   return false;
 }
 
+/**
+ * @description Check input value to be a positive integer
+ * @Return {Bool} true of positive integer else false
+ */
+function isPositiveInteger(str) {
+  var num = Math.floor(Number(str));
+  return num !== Infinity && String(num) === str && num >= 0;
+}
+
 module.exports = {
   process,
+  isOnGrid,
+  moveForward,
+  rotateRobotLeft,
+  rotateRobotRight,
+  validateMoveCommands,
+  moveRobot,
+  isCoordsOk,
 };
